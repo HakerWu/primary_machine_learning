@@ -2,6 +2,7 @@ from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
+import jieba
 
 
 def datasets_demo():
@@ -77,6 +78,37 @@ def count_chinese_demo():
     return None
 
 
+def cut_word(text):
+    """
+    进行中文分词
+    :param text:
+    :return:
+    """
+    return " ".join(jieba.cut(text))
+
+
+def count_chinese_demo2():
+    """
+    中文文本特征抽取：CountVecotrizer
+    :return:
+    """
+    data = ["北京市，简称“京”，是中华人民共和国省级行政区、首都、直辖市、国家中心城市、超大城市，全国政治中心、文化中心、国际交往中心、科技创新中心，是世界著名古都和现代化国际城市",
+            "是中国共产党中央委员会、中华人民共和国中央人民政府和全国人民代表大会常务委员会的办公所在地。"]
+
+    data_new = []
+    for sentence in data:
+        data_new.append(cut_word(sentence))
+
+    # 1. 实例化一个转换器类
+    transfer = CountVectorizer()
+
+    # 2. 调用fit_transform
+    data_final = transfer.fit_transform(data_new)
+    print("data_new:\n", data_final.toarray())
+    print("特征名字：\n", transfer.get_feature_names())
+    return None
+
+
 if __name__ == "__main__":
     # 代码1：sklearn数据集使用
     # datasets_demo()
@@ -85,4 +117,6 @@ if __name__ == "__main__":
     # 代码3：文本特征抽取：CountVecotrizer
     # count_demo()
     # 代码4：中文文本特征抽取：CountVecotrizer
-    count_chinese_demo()
+    # count_chinese_demo()
+    # 代码5： jieba分词
+    count_chinese_demo2()
