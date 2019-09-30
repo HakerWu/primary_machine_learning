@@ -1,8 +1,11 @@
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import jieba
+import numpy as np
+import pandas as pd
 
 
 def datasets_demo():
@@ -109,6 +112,70 @@ def count_chinese_demo2():
     return None
 
 
+def tfidf_demo():
+    """
+    用TF-IDF的方法进行文本特征抽取
+    :return:
+    """
+    data = ["北京市，简称“京”，是中华人民共和国省级行政区、首都、直辖市、国家中心城市、超大城市，全国政治中心、文化中心、国际交往中心、科技创新中心，是世界著名古都和现代化国际城市",
+            "是中国共产党中央委员会、中华人民共和国中央人民政府和全国人民代表大会常务委员会的办公所在地。"]
+
+    data_new = []
+    for sentence in data:
+        data_new.append(cut_word(sentence))
+    data_new = np.array(data_new).reshape(1, -1)
+
+    # 1. 实例化一个转换器类
+    transfer = TfidfTransformer()
+
+    # 2. 调用fit_transform
+    print(data_new)
+    # data_new.reshape(1, -1)
+    data_final = transfer.fit_transform(data_new)
+    print("data_new:\n", data_final.toarray())
+    print("特征名字：\n", transfer.get_feature_names())
+
+    return None
+
+
+def minmax_demo():
+    """
+    归一化
+    :return:
+    """
+    # 1. 获取数据
+    data = pd.read_csv("dating.txt")
+    data = data.iloc[:, :3]
+
+    # 2. 实例化一个转换器
+    transfer = MinMaxScaler()
+
+    # 3. 调用fit_transform
+    data_new = transfer.fit_transform(data)
+
+    print(data_new)
+    return None
+
+
+def stand_demo():
+    """
+    标准化
+    :return:
+    """
+    # 1. 获取数据
+    data = pd.read_csv("dating.txt")
+    data = data.iloc[:, :3]
+
+    # 2. 实例化一个转换器
+    transfer = StandardScaler()
+
+    # 3. 调用fit_transform
+    data_new = transfer.fit_transform(data)
+
+    print(data_new)
+    return None
+
+
 if __name__ == "__main__":
     # 代码1：sklearn数据集使用
     # datasets_demo()
@@ -119,4 +186,10 @@ if __name__ == "__main__":
     # 代码4：中文文本特征抽取：CountVecotrizer
     # count_chinese_demo()
     # 代码5： jieba分词
-    count_chinese_demo2()
+    # count_chinese_demo2()
+    # 代码6: 用TF-IDF的方法进行文本特征抽取
+    # tfidf_demo()
+    # 代码7: 归一化
+    # minmax_demo()
+    # 代码8: 标准化
+    stand_demo()
