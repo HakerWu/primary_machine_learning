@@ -3,6 +3,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.feature_selection import VarianceThreshold
+from scipy.stats import pearsonr
+from sklearn.decomposition import PCA
 import jieba
 import numpy as np
 import pandas as pd
@@ -176,6 +179,46 @@ def stand_demo():
     return None
 
 
+def variance_demo():
+    """
+    过滤低方差特征
+    :return:
+    """
+    # 1. 获取数据
+    data = pd.read_csv("factor_returns.csv")
+    data = data.iloc[:, 1:-2]
+    print("data:\n", data)
+
+    # 2. 实例化一个转换器类
+    transfer = VarianceThreshold()
+
+    # 3. 调用fit_transform
+    data_new = transfer.fit_transform(data)
+
+    # 计算某两个变量之间的相关系数
+    r = pearsonr(data["pe_ratio"], data["pb_ratio"])
+
+    print("相关系数：\n", r)
+
+    print(data_new)
+    return None
+
+
+def pac_demo():
+    """
+    PCA降维
+    :return:
+    """
+    data = [[2, 8, 4, 5], [6, 3, 0, 8], [5, 4, 9, 1]]
+
+    # 1. 实例化一个转换器类
+    transfer = PCA(n_components=0.95)
+    # 2. 调用fit_transform
+    data_new = transfer.fit_transform(data)
+    print("data_new:\n", data_new)
+    return None
+
+
 if __name__ == "__main__":
     # 代码1：sklearn数据集使用
     # datasets_demo()
@@ -192,4 +235,8 @@ if __name__ == "__main__":
     # 代码7: 归一化
     # minmax_demo()
     # 代码8: 标准化
-    stand_demo()
+    # stand_demo()
+    # 代码9：低方差特征过滤
+    # variance_demo()
+    # 代码10：PCA降维
+    pac_demo()
