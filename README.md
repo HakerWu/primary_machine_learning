@@ -75,3 +75,69 @@ sklearn.feature_selection
     * 返回值：转换后指定维度的array
 ## 案例：探究用户对物品类别的喜好细分
     https://jupyter.dgutdev.ml/notebooks/work/personal_folder/wjer/instacart_from_kaggle.ipynb
+    
+
+# 分类算法
+## sklearn转换器和预估器
+### 转换器(transformer)
+* 实例化
+* 调用fit_transformer
+### 预估器(estimator)
+* 实例化一个estimator
+* estimator.fit(x_train, y_train)
+* 模型评估
+    * y_predict = estimator.predict(x_test)  
+    then check if y_test == y_predict
+    * 计算准确率  
+    estimator.score(x_test, y_test)
+## KNN算法(K-近邻算法)
+### 什么是K-近邻算法
+* 存在一个样本数据集合，也称为训练样本集，并且样本集中每个数据都存在标签，即我们知道样本集中每一数据与所属分类对应的关系。输入没有标签的数据后，将新数据中的每个特征与样本集中数据对应的特征进行比较，提取出样本集中特征最相似数据（最近邻）的分类标签。  
+* 确定最近距离
+    * 欧式距离
+    ![微信图片_20191004132001.png](https://i.loli.net/2019/10/04/eaUsf9yS3XPdnEV.png)
+    * 曼哈顿距离
+    ![微信图片_20191004132001.png](https://i.loli.net/2019/10/04/BMhJlQqUDyzp3nZ.png)
+    * 明可夫斯基距离  
+    ![微信图片_20191004133038.png](https://i.loli.net/2019/10/04/kSEfPVbxHZtQoUq.png)
+* K的取值  
+    若K过小，容易受异常点影响；若K过大，受样本不均衡的影响。
+* 使用KNN前的数据处理
+    无量纲化的处理：标准化
+### K-近邻算法API
+* sklearn.neighbors.KNeighborsClassifier(n_neighbors=5, algorithm='auto')
+    * n_neighbors: int,可选(默认=5)
+    * algorithm: {'auto', 'ball_tree', 'kd_tree', 'brute'}
+### 案例：鸢尾花种类预处
+1) 获取数据
+2) 数据集划分
+3) 特征工程
+    标准化
+4) KNN
+5) 模型评估
+### 总结
+* 缺点：K值难确定；内存开销大
+## 模型选择和调优
+### 交叉验证
+* 基本思想就是将原始数据（dataset）进行分组，一部分做为训练集来训练模型，另一部分做为测试集来评价模型。
+### 超参数搜索-网格搜索
+* 一种调参手段；穷举搜索：在所有候选的参数选择中，通过循环遍历，尝试每一种可能性，表现最好的参数就是最终的结果。其原理就像是在数组里找最大值。
+* sklearn.model_selection.GridSearchCV(estimator,param_grid,cv)  
+    * estimator：估计器对象
+    * param_grid：估计器参数，参数名称（字符串）作为key，要测试的参数列表作为value的字典，或这样的字典构成的列表
+    * cv：整形，指定K折交叉验证
+    * fit()：输入训练数据
+    * score()：准确率
+    * best_score_：交叉验证中测试的最好的结果
+    * best_estimator_：交叉验证中测试的最好的参数模型
+    * best_params_：交叉验证中测试的最好的参数
+    * cv_results_：每次交叉验证的结果
+### 鸢尾花案例增加K值调优
+### 案例：预测facebook签到位置
+* 由于找不到数据，没实践
+### 总结
+## 朴素贝叶斯算法
+
+## 决策树
+
+## 随机森林
