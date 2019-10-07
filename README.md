@@ -226,13 +226,60 @@ sklearn.feature_selection
 5) 模型评估
     ![微信图片_20191006174350.png](https://i.loli.net/2019/10/06/3aBYWeUXyvocsxh.png)
 ## 欠拟合与过拟合
-
+ * 参考博客：https://www.cnblogs.com/zhhfan/p/10476761.html  
 ## 线性回归的改进——岭回归
-
+* 岭回归就是带有L2正则化的线性回归
+* API  
+    ![微信图片_20191007122659.png](https://i.loli.net/2019/10/07/piqfnmoJeI5GHhc.png)
 ## 分类算法——逻辑回归与二分类
-
+* 线性回归的输出就是逻辑回归的输入
+* sigmoid函数
+* API  
+![微信图片_20191007144419.png](https://i.loli.net/2019/10/07/eGtB8Sy5Uurdmgk.png)
+* 良/恶性乳腺癌预测  
+    * http://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/
+    * 流程  
+        1) 获取数据 加上names
+        2) 数据处理 处理缺失值  
+        3) 数据集划分
+        4) 特征工程 无量纲化-标准化
+        5) 逻辑回归预估器
+        6) 模型评估
+* 精确率与召回率
+    * 混淆矩阵
+    * 精确率
+    * 召回率
+    * F1-score  
+    ![微信图片_20191007153704.png](https://i.loli.net/2019/10/07/EP8nXeZTgSLVDsU.png)  
+    * API  
+    ![微信图片_20191007153833.png](https://i.loli.net/2019/10/07/yvJ6p5jNSgksBXC.png)
+* ROC曲线和AUC指标
+    * TPR = TP/(TP+FN) 召回率
+    * FPR = FP/(FP+TN)
+    * API 
+    ![微信图片_20191007155745.png](https://i.loli.net/2019/10/07/irHGJTXLcsob7PU.png)
 ## 模型保存与加载
-
+* API  
+![微信图片_20191007160410.png](https://i.loli.net/2019/10/07/VDfF26mvQgyGiXC.png)
 ## 无监督学习——K-means算法
-
+* 没有目标值-无监督学习
+* 无监督学习包含的算法
+    * 聚类
+        * K-means(K均值聚类)
+    * 降维
+        * PCA
+* K-means  
+![微信图片_20191007161340.png](https://i.loli.net/2019/10/07/cBdZFXikS6YuLv2.png)
+* API  
+![微信图片_20191007161553.png](https://i.loli.net/2019/10/07/UjINAatwdxTecKW.png)
+* 轮廓系数  
+![微信图片_20191007162337.png](https://i.loli.net/2019/10/07/jaNqWrhskT4Bop3.png)
+* 轮廓系数API  
+![微信图片_20191007162640.png](https://i.loli.net/2019/10/07/Wr9RTYg4Ms6vUa2.png)
 ## 总结
+* 线性回归
+* 过拟合与欠拟合
+* 岭回归
+* 逻辑回归
+* 保存与加载模型
+* K-Means
